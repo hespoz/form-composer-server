@@ -6,7 +6,6 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
 
   models.Template.findAll({}).then(function(templates) {
-    console.log(templates);
     res.json(templates);
   });
 
@@ -19,6 +18,10 @@ router.post('/', function(req, res, next) {
    }).then(function() {
      res.send('respond with a resource save');
    });
+});
+
+router.get('/:templateId', function(req, res, next){
+    //models.Template.findById()
 });
 
 router.put('/:templateId', function(req, res, next) {

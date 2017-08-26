@@ -110,6 +110,7 @@ var jsonExampleTemplate = {
 models.Template.sync({force: true}).then(() => {
   // Table created
   return models.Template.create({
+      title: "Test template",
     templateJson: JSON.stringify(jsonExampleTemplate)
   });
 });
