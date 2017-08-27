@@ -13,6 +13,13 @@ const TemplatesAction = {
             actionName: 'getTemplateById',
             data:id
         });
+    },
+
+    saveTemplate : (template) => {
+        AppDispatcher.dispatch({
+            actionName: 'saveTemplate',
+            data:template
+        });
     }
 
 };

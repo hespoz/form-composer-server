@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const Templates = (props) => {
     return (<div>
 
+        <Link to={"/template/new"}>Add Template</Link>
         <table className="table">
             <thead>
             <tr>

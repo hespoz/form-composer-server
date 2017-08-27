@@ -10,6 +10,7 @@ const Content = () => {
         <Switch>
             <Route exact path="/" component={TemplatesContainer}/>
             <Route path="/template/:id" component={EditTemplateContainer}/>
+            <Route path="/template/new" component={EditTemplateContainer}/>
         </Switch>
     );
 
