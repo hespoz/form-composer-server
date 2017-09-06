@@ -15,6 +15,13 @@ const TemplatesAction = {
         });
     },
 
+    deleteTemplateById : (id) => {
+        AppDispatcher.dispatch({
+            actionName: 'deleteTemplateById',
+            data:id
+        });
+    },
+
     saveTemplate : (template) => {
         AppDispatcher.dispatch({
             actionName: 'saveTemplate',

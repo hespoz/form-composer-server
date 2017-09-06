@@ -1,11 +1,20 @@
 var express = require('express');
+var Dropbox = require('dropbox');
+var fs = require('fs');
 var models = require('../models');
+
 var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
     models.Template.findAll({}).then(function (templates) {
+        console.log("templates",templates);
         res.json(templates);
+    }).catch(function(err){
+        console.log(err)
+        res.status(500).json({
+            message: "Error creating template"
+        });
     });
 });
 
@@ -28,35 +37,6 @@ router.post('/', function (req, res, next) {
                 message: "Error creating template"
             });
         });
-
-        /*if(newRecord.id !== null && newRecord.id !== undefined){
-
-
-
-            models.Template.findById(newRecord.id).then(function(template){
-                template.updateAttributes({
-                    title:template.title,
-                    templateJson:template.templateJson
-                });
-            }).catch(function(error){
-
-            });
-
-        } else {
-            models.Template.create({
-                title: newRecord.title,
-                templateJson: JSON.stringify(newRecord.templateJson)
-            }).then(function () {
-                res.json({
-                    message: "Template created"
-                });
-            }).catch(function () {
-                res.json({
-                    message: "Error creating template"
-                });
-            });
-        }
-*/
 
     } catch (err) {
         console.log(err)
@@ -104,6 +84,40 @@ router.delete('/:templateId', function (req, res) {
     }).then(function () {
         res.send('respond with a resource save');
     });
+});
+
+router.post('/pdf', function(req, res, next) {
+
+    console.log(req.body)
+    let newRecord = req.body;
+
+    var dbx = new Dropbox({ accessToken: '1vQezs6RP20AAAAAAAAaxQFsg6n-CP_OYmTcHOlLxkKNct9HQKot9h_UQAQ8Kr7x' });
+
+
+    var stream = fs.createWriteStream("my_file.txt");
+    stream.once('open', function(fd) {
+        stream.write("My first row\n");
+        stream.write("My second row\n");
+        stream.end();
+
+        dbx.filesUpload({path: '/' + 'test.txt', contents: 'adsf'})
+            .then(function(response) {
+                console.log("response", response);
+                res.json({
+                    message: "Pdf generated"
+                });
+            })
+            .catch(function(error) {
+                console.error("error", error);
+            });
+
+
+    });
+
+
+
+
+
 });
 
 

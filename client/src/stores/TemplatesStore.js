@@ -60,6 +60,7 @@ AppDispatcher.register(function (payload) {
 
             axios.get(HOST + '/templates')
                 .then(function (response) {
+                    console.log("Data templates", response.data)
                     _templatesList = response.data;
                     _error = null;
                     TemplatesStore.emitChange();
@@ -89,6 +90,30 @@ AppDispatcher.register(function (payload) {
                 });
 
             break;
+
+        case 'deleteTemplateById':
+
+            axios.delete(HOST + '/templates/' + payload.data)
+                .then(function (response) {
+                    _message = "Template removed";
+                    _error = null;
+
+                    //Remove locally.
+                    for (let i=0; i<_templatesList.length;i++) {
+                        _templatesList = _templatesList.slice(i,0);
+                    }
+
+
+                    TemplatesStore.emitChange();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    _error = 'Error removing the templates';
+                    TemplatesStore.emitChange();
+                });
+
+            break;
+
 
         case 'saveTemplate':
 
